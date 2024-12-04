@@ -1,3 +1,2 @@
-Git pull failed.
-error: RPC failed; HTTP 500 curl 22 The requested URL returned error: 500
-fatal: expected flush after ref listing
+Git pull successful.
+Already up to date.
