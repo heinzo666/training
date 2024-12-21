@@ -10,4 +10,4 @@ scipy
 ftfy
 gradio==3.50.0
 safetensors
-
+diffusers==0.30.0
