@@ -7,8 +7,7 @@ accelerate
 opencv-python
 controlnet_aux
 scipy
-
 ftfy
 gradio==3.50.0
 safetensors
-diffusers
+diffusers==0.30.0
