@@ -6,6 +6,9 @@ accelerate
 
 opencv-python
 controlnet_aux
+
+websockets==14.0
+
 scipy
 ftfy
 gradio
