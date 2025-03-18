@@ -11,5 +11,3 @@ scipy
 ftfy
 gradio
 safetensors
-diffusers==0.30.0
-torch==2.2.1
