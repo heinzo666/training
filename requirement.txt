@@ -7,7 +7,7 @@ accelerate
 opencv-python
 controlnet_aux
 scipy
-numpy
+numpy==1.26.4
 ftfy
 gradio==3.50.0
 safetensors
