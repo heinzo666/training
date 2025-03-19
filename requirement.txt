@@ -9,5 +9,7 @@ controlnet_aux
 
 scipy
 ftfy
-gradio
+gradio==3.50.0
 safetensors
+diffusers==0.30.0
+numpy==1.26.4
