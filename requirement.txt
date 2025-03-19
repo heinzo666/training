@@ -1,4 +1,4 @@
-xformers==0.0.25
+
 
 transformers
 peft
@@ -7,8 +7,12 @@ accelerate
 opencv-python
 controlnet_aux
 
+
 scipy
 ftfy
+xformers==0.0.25
+torchaudio==2.2.1 
+torchvision==0.17.1
 gradio==3.50.0
 safetensors
 diffusers==0.30.0
