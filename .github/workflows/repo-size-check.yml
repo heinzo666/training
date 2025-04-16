@@ -1,0 +1,58 @@
+name: Notify if Repo Exceeds 1GB
+
+on:
+  schedule:
+    - cron: '0 3 * * *' # runs every day at 03:00 UTC
+  workflow_dispatch: # optional: lets you trigger manually
+
+jobs:
+  check-size:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Get repo size
+        id: check_size
+        run: |
+          SIZE_MB=$(du -sm . | cut -f1)
+          echo "Repository size: $SIZE_MB MB"
+          echo "size_mb=$SIZE_MB" >> $GITHUB_OUTPUT
+
+      - name: Check if size exceeds 1GB and alert not sent
+        id: needs_alert
+        run: |
+          ALERT_FILE=".github/.alerted_size_check"
+
+          if [[ -f "$ALERT_FILE" ]]; then
+            echo "Alert already sent. Skipping..."
+            echo "send_alert=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          if [ "${{ steps.check_size.outputs.size_mb }}" -gt 1000 ]; then
+            echo "Size exceeds 1GB, need to send alert."
+            echo "send_alert=true" >> $GITHUB_OUTPUT
+          else
+            echo "Repo size is under threshold. No alert."
+            echo "send_alert=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Send Discord Alert
+        if: steps.needs_alert.outputs.send_alert == 'true'
+        run: |
+          curl -H "Content-Type: application/json" \
+            -X POST \
+            -d "{\"content\": \"🚨 Repo size exceeded 1GB! Currently at ${{ steps.check_size.outputs.size_mb }}MB.\"}" \
+            ${{ secrets.DISCORD_WEBHOOK_URL }}
+
+      - name: Mark alert as sent
+        if: steps.needs_alert.outputs.send_alert == 'true'
+        run: |
+          echo "alerted" > .github/.alerted_size_check
+          git config --global user.email "you@example.com"
+          git config --global user.name "Repo Bot"
+          git add .github/.alerted_size_check
+          git commit -m "Mark alert sent for repo size"
+          git push
