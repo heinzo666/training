@@ -1,2 +1,2 @@
-Git pull successful.
-Already up to date.
+Git pull failed.
+fatal: unable to access 'https://github.com/heinzo666/training.git/': Failed to connect to github.com port 443 after 6 ms: Connection refused
